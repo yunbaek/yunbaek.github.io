@@ -86,15 +86,17 @@ Fetch join 시에 별칭 사용을 권장하지 않는 이유를 알아본다.
               "select t from Team t join fetch t.members m where m.username = 'user1'", Team.class)
           .getResultList(); // alias 이용
 
-      assertThat(resultUsingAlias).hasSize(1); // (1)
-      assertThat(resultUsingAlias.get(0).getMembers()).hasSize(1);
+      assertThat(resultUsingAlias.get(0).getMembers())
+          .hasSize(1)
+          .extracting("username").containsExactly("user1");
 
       List<Team> result = em.createQuery(
               "select distinct t from Team t join fetch t.members", Team.class)
           .getResultList(); // alias 이용 x (중복 제거를 위해 distinct)
 
-      assertThat(result).hasSize(1); // (2)
-      assertThat(result.get(0).getMembers()).hasSize(1); // member1, member2 가 조회되어야 하지만 member1 만 조회됨
+      assertThat(result.get(0).getMembers())
+          .hasSize(1)
+          .extracting("username").containsExactly("user1");
     }
     ```
     
