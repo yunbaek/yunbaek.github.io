@@ -25,7 +25,7 @@ Fetch join 시에 별칭 사용을 권장하지 않는 이유를 알아본다.
 <br>간단한 예제를 만들어 보자
 
 - Member.class
-```java
+  ```java
   @Entity
   @Getter
   @Setter
@@ -41,7 +41,7 @@ Fetch join 시에 별칭 사용을 권장하지 않는 이유를 알아본다.
     @JoinColumn(name = "team_id")
     private Team team;
   }
-```
+  ```
 
 - Team.class
   ```java

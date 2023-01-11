@@ -148,8 +148,8 @@
 </ul>
 <p><br>간단한 예제를 만들어 보자</p>
 <ul>
-<li>Member.class</li>
-</ul>
+<li>
+<p>Member.class</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -169,24 +169,24 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java">  <span class="nd">@Entity</span>
-  <span class="nd">@Getter</span>
-  <span class="nd">@Setter</span>
-  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Member</span> <span class="o">{</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Entity</span>
+<span class="nd">@Getter</span>
+<span class="nd">@Setter</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Member</span> <span class="o">{</span>
 
-    <span class="nd">@Id</span>
-    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">GenerationType</span><span class="o">.</span><span class="na">IDENTITY</span><span class="o">)</span> 
-    <span class="kd">private</span> <span class="kt">long</span> <span class="n">id</span><span class="o">;</span>
+  <span class="nd">@Id</span>
+  <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">GenerationType</span><span class="o">.</span><span class="na">IDENTITY</span><span class="o">)</span> 
+  <span class="kd">private</span> <span class="kt">long</span> <span class="n">id</span><span class="o">;</span>
 
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="o">;</span>
 
-    <span class="nd">@ManyToOne</span>
-    <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#34;team_id&#34;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">Team</span> <span class="n">team</span><span class="o">;</span>
-  <span class="o">}</span>
+  <span class="nd">@ManyToOne</span>
+  <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#34;team_id&#34;</span><span class="o">)</span>
+  <span class="kd">private</span> <span class="n">Team</span> <span class="n">team</span><span class="o">;</span>
+<span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div></li>
 <li>
 <p>Team.class</p>
 <div class="highlight"><div class="chroma">
