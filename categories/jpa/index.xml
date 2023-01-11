@@ -6,10 +6,10 @@
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>yunbaek4564@gmail.com (yunbaek)</managingEditor>
             <webMaster>yunbaek4564@gmail.com (yunbaek)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 09 Jan 2023 16:10:34 &#43;0900</lastBuildDate><atom:link href="https://yunbaek.github.io/categories/jpa/" rel="self" type="application/rss+xml" /><item>
     <title>Fetch join 시에 별칭을 쓰지 않는 이유</title>
-    <link>https://yunbaek.github.io/fetch-join-alias-problem/</link>
+    <link>https://yunbaek.github.io/2023/01/fetch-join-alias-problem/</link>
     <pubDate>Mon, 09 Jan 2023 16:10:34 &#43;0900</pubDate>
     <author>yunbaek</author>
-    <guid>https://yunbaek.github.io/fetch-join-alias-problem/</guid>
+    <guid>https://yunbaek.github.io/2023/01/fetch-join-alias-problem/</guid>
     <description><![CDATA[Intro Fetch join 시에 별칭 사용을 권장하지 않는 이유를 알아본다. Fetch Join fetch join 은 SQL 이 아닌 JPQL 에서 성능 최적화를 위해 연관되어 있는 모든 엔티티 혹은 컬렉션을 함께 조회하는 기능 Fetch Join 한계 fetch join 이 성능 최적화에 도움을 주지만, 몇 가지 한계점이 있기 때문에 사용에 주의해야 한다.
 별칭 사용 불가 카테시안 곱(Cartecian Product) 연산으로 인한 중복 발생 일대다 조인 2개 이상 불가 페이징 처리 불가 이 포스팅에서는 왜 fetch join 에 별칭 사용이 불가한지 알아본다.]]></description>
 </item>
