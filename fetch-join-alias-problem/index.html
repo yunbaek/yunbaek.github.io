@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Fetch join 시에 별칭을 쓰지 않는 이유 - yunbaek&#39;s blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:title" content="Fetch join 시에 별칭을 쓰지 않는 이유" />
-<meta property="og:description" content="Intro Fetch join 시에 별칭 사용을 권장하지 않는 이유를 알아본다. Fetch Join fetch join 은 SQL 이 아닌 JPQL 에서 성능 최적화를 위해 LazyLoading 으로 연관되어 있는 엔티티 혹은 컬렉션을 함께 조회하는 기능 Fetch Join 한계 fetch join 의 설명만 보면 마냥 좋아 보이지만, 몇 가지 한계점이 있기 때문에 사용에 주의해야 한다.
+<meta property="og:description" content="Intro Fetch join 시에 별칭 사용을 권장하지 않는 이유를 알아본다. Fetch Join  fetch join 은 SQL 이 아닌 JPQL 에서 성능 최적화를 위해 연관되어 있는 모든 엔티티 혹은 컬렉션을 함께 조회하는 기능  Fetch Join 한계 fetch join 이 성능 최적화에 도움을 주지만, 몇 가지 한계점이 있기 때문에 사용에 주의해야 한다.
  별칭 사용 불가 카테시안 곱(Cartecian Product) 연산으로 인한 중복 발생 일대다 조인 2개 이상 불가 페이징 처리 불가  이 포스팅에서는 왜 fetch join 에 별칭 사용이 불가한지 알아본다." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://yunbaek.github.io/fetch-join-alias-problem/" />
@@ -16,7 +16,7 @@
 <meta name="twitter:image" content="https://yunbaek.github.io/logo.png"/>
 
 <meta name="twitter:title" content="Fetch join 시에 별칭을 쓰지 않는 이유"/>
-<meta name="twitter:description" content="Intro Fetch join 시에 별칭 사용을 권장하지 않는 이유를 알아본다. Fetch Join fetch join 은 SQL 이 아닌 JPQL 에서 성능 최적화를 위해 LazyLoading 으로 연관되어 있는 엔티티 혹은 컬렉션을 함께 조회하는 기능 Fetch Join 한계 fetch join 의 설명만 보면 마냥 좋아 보이지만, 몇 가지 한계점이 있기 때문에 사용에 주의해야 한다.
+<meta name="twitter:description" content="Intro Fetch join 시에 별칭 사용을 권장하지 않는 이유를 알아본다. Fetch Join  fetch join 은 SQL 이 아닌 JPQL 에서 성능 최적화를 위해 연관되어 있는 모든 엔티티 혹은 컬렉션을 함께 조회하는 기능  Fetch Join 한계 fetch join 이 성능 최적화에 도움을 주지만, 몇 가지 한계점이 있기 때문에 사용에 주의해야 한다.
  별칭 사용 불가 카테시안 곱(Cartecian Product) 연산으로 인한 중복 발생 일대다 조인 2개 이상 불가 페이징 처리 불가  이 포스팅에서는 왜 fetch join 에 별칭 사용이 불가한지 알아본다."/>
 <meta name="application-name" content="yunbaek&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="yunbaek&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -32,12 +32,12 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/yunbaek.github.io\/fetch-join-alias-problem\/"
-        },"image": ["https:\/\/yunbaek.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "jpa, hibernate","wordcount":  440 ,
+        },"image": ["https:\/\/yunbaek.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "jpa, hibernate","wordcount":  464 ,
         "url": "https:\/\/yunbaek.github.io\/fetch-join-alias-problem\/","datePublished": "2023-01-09T16:10:34+09:00","dateModified": "2023-01-09T16:10:34+09:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": "https:\/\/yunbaek.github.io\/images\/avatar.png"},"author": {
                 "@type": "Person",
-                "name": "kyoungyun"
+                "name": "yunbaek"
             },"description": ""
     }
     </script></head>
@@ -105,8 +105,8 @@
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Fetch join 시에 별칭을 쓰지 않는 이유</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>kyoungyun</a></span>&nbsp;<span class="post-category">included in <a href="/categories/jpa/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>JPA</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-09">2023-01-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;440 words&nbsp;
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>yunbaek</a></span>&nbsp;<span class="post-category">included in <a href="/categories/jpa/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>JPA</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-09">2023-01-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;464 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -128,10 +128,12 @@
 <p>Fetch join 시에 별칭 사용을 권장하지 않는 이유를 알아본다.
 <br></p>
 <h2 id="fetch-join">Fetch Join</h2>
-<p><code>fetch join</code> 은 <code>SQL</code> 이 아닌 <code>JPQL</code> 에서 성능 최적화를 위해 <code>LazyLoading</code> 으로 연관되어 있는 엔티티 혹은 컬렉션을 함께 조회하는 기능
+<blockquote>
+<p><code>fetch join</code> 은 <code>SQL</code> 이 아닌 <code>JPQL</code> 에서 성능 최적화를 위해 연관되어 있는 모든 엔티티 혹은 컬렉션을 함께 조회하는 기능
 <br></p>
+</blockquote>
 <h3 id="fetch-join-한계">Fetch Join 한계</h3>
-<p><code>fetch join</code> 의 설명만 보면 마냥 좋아 보이지만, 몇 가지 한계점이 있기 때문에 사용에 주의해야 한다.</p>
+<p><code>fetch join</code> 이 성능 최적화에 도움을 주지만, 몇 가지 한계점이 있기 때문에 사용에 주의해야 한다.</p>
 <ul>
 <li>별칭 사용 불가</li>
 <li>카테시안 곱(Cartecian Product) 연산으로 인한 중복 발생</li>
@@ -286,29 +288,23 @@
           <span class="s">&#34;select t from Team t join fetch t.members m where m.username = &#39;user1&#39;&#34;</span><span class="o">,</span> <span class="n">Team</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
       <span class="o">.</span><span class="na">getResultList</span><span class="o">();</span> <span class="c1">// alias 이용
 </span><span class="c1"></span>
-  <span class="n">assertThat</span><span class="o">(</span><span class="n">resultUsingAlias</span><span class="o">).</span><span class="na">hasSize</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
-  <span class="n">assertThat</span><span class="o">(</span><span class="n">resultUsingAlias</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">0</span><span class="o">).</span><span class="na">getMembers</span><span class="o">()).</span><span class="na">hasSize</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+  <span class="n">assertThat</span><span class="o">(</span><span class="n">resultUsingAlias</span><span class="o">).</span><span class="na">hasSize</span><span class="o">(</span><span class="n">1</span><span class="o">);</span> <span class="c1">// (1)
+</span><span class="c1"></span>  <span class="n">assertThat</span><span class="o">(</span><span class="n">resultUsingAlias</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">0</span><span class="o">).</span><span class="na">getMembers</span><span class="o">()).</span><span class="na">hasSize</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
 
   <span class="n">List</span><span class="o">&lt;</span><span class="n">Team</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="na">createQuery</span><span class="o">(</span>
           <span class="s">&#34;select distinct t from Team t join fetch t.members&#34;</span><span class="o">,</span> <span class="n">Team</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
       <span class="o">.</span><span class="na">getResultList</span><span class="o">();</span> <span class="c1">// alias 이용 x (중복 제거를 위해 distinct)
 </span><span class="c1"></span>
-  <span class="n">assertThat</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="na">hasSize</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
-  <span class="n">assertThat</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">0</span><span class="o">).</span><span class="na">getMembers</span><span class="o">()).</span><span class="na">hasSize</span><span class="o">(</span><span class="n">1</span><span class="o">);</span> <span class="c1">// member1, member2 가 조회되어야 하지만 member1 만 조회됨
+  <span class="n">assertThat</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="na">hasSize</span><span class="o">(</span><span class="n">1</span><span class="o">);</span> <span class="c1">// (2)
+</span><span class="c1"></span>  <span class="n">assertThat</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">0</span><span class="o">).</span><span class="na">getMembers</span><span class="o">()).</span><span class="na">hasSize</span><span class="o">(</span><span class="n">1</span><span class="o">);</span> <span class="c1">// member1, member2 가 조회되어야 하지만 member1 만 조회됨
 </span><span class="c1"></span><span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div></li>
+</div><ul>
+<li>(1): 위에서 말한 것과 같이 <code>fetch join</code> 은 연관된 엔티티나 컬렉션을 모두 가지고 온다는 가정 하에 사용해야 하기 때문에, <code>member1, member2</code> 가 모두 있어야 하지만,</li>
 </ul>
-<p>위 테스트는 성공한다.<br>
-<img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="img.png"
-        data-srcset="img.png, img.png 1.5x, img.png 2x"
-        data-sizes="auto"
-        alt="img.png"
-        title="img.png" /></p>
+</li>
+</ul>
 <p><code>resultUsingAlias</code> 는 별칭을 통해 where 조건을 걸었고, <code>result</code> 는 걸지 않았는데, 결과가 같은 이유는 <code>Team</code>의 식별자(id)가 같기 때문에 다시 DB에서 조회 하지 않고, 기존 영속성 컨텍스트 내에 조회되어 있는 엔티티(<code>resultUsingAlias</code>)를 가지고 오기 때문이다.<br>
 이처럼 불안정한 캐시를 불러와 작업하게 된다면 최악의 경우 <code>member2</code> 가 DB 에서 삭제될 수도 있다.</p>
 <p>이는 JPA 에서는 <code>fetch join</code> 의 별칭 사용을 금지했지만, 그 구현체인 <code>Hibernate</code> 에서는 별칭 사용이 가능하기 때문이다.</p>

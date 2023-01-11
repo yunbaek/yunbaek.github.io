@@ -5,10 +5,10 @@
 Fetch join 시에 별칭 사용을 권장하지 않는 이유를 알아본다.
 <br>
 ## Fetch Join
-`fetch join` 은 `SQL` 이 아닌 `JPQL` 에서 성능 최적화를 위해 `LazyLoading` 으로 연관되어 있는 엔티티 혹은 컬렉션을 함께 조회하는 기능
+> `fetch join` 은 `SQL` 이 아닌 `JPQL` 에서 성능 최적화를 위해 연관되어 있는 모든 엔티티 혹은 컬렉션을 함께 조회하는 기능
 <br>
 ### Fetch Join 한계
-`fetch join` 의 설명만 보면 마냥 좋아 보이지만, 몇 가지 한계점이 있기 때문에 사용에 주의해야 한다.
+`fetch join` 이 성능 최적화에 도움을 주지만, 몇 가지 한계점이 있기 때문에 사용에 주의해야 한다.
 
 - 별칭 사용 불가
 - 카테시안 곱(Cartecian Product) 연산으로 인한 중복 발생
@@ -86,19 +86,19 @@ Fetch join 시에 별칭 사용을 권장하지 않는 이유를 알아본다.
               "select t from Team t join fetch t.members m where m.username = 'user1'", Team.class)
           .getResultList(); // alias 이용
 
-      assertThat(resultUsingAlias).hasSize(1);
+      assertThat(resultUsingAlias).hasSize(1); // (1)
       assertThat(resultUsingAlias.get(0).getMembers()).hasSize(1);
 
       List<Team> result = em.createQuery(
               "select distinct t from Team t join fetch t.members", Team.class)
           .getResultList(); // alias 이용 x (중복 제거를 위해 distinct)
 
-      assertThat(result).hasSize(1);
+      assertThat(result).hasSize(1); // (2)
       assertThat(result.get(0).getMembers()).hasSize(1); // member1, member2 가 조회되어야 하지만 member1 만 조회됨
     }
     ```
-위 테스트는 성공한다.<br>
-![img.png](img.png)
+    
+    - (1): 위에서 말한 것과 같이 `fetch join` 은 연관된 엔티티나 컬렉션을 모두 가지고 온다는 가정 하에 사용해야 하기 때문에, `member1, member2` 가 모두 있어야 하지만,  
 
 `resultUsingAlias` 는 별칭을 통해 where 조건을 걸었고, `result` 는 걸지 않았는데, 결과가 같은 이유는 `Team`의 식별자(id)가 같기 때문에 다시 DB에서 조회 하지 않고, 기존 영속성 컨텍스트 내에 조회되어 있는 엔티티(`resultUsingAlias`)를 가지고 오기 때문이다.<br>
 이처럼 불안정한 캐시를 불러와 작업하게 된다면 최악의 경우 `member2` 가 DB 에서 삭제될 수도 있다.
