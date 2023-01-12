@@ -153,5 +153,8 @@ Fetch join 시에 별칭 사용을 권장하지 않는 이유를 알아본다.
     assertThat(resultList).hasSize(2);
   }
 ```
-![join-with-dto](join-using-dto.png "테스트 결과")
+```shell
+teamInquiryDTO = TeamInquiryDTO(teamId=1, teamName=teamA, memberId=1, userName=user1)
+teamInquiryDTO = TeamInquiryDTO(teamId=1, teamName=teamA, memberId=2, userName=user2)
+```
 
