@@ -158,3 +158,11 @@ teamInquiryDTO = TeamInquiryDTO(teamId=1, teamName=teamA, memberId=1, userName=u
 teamInquiryDTO = TeamInquiryDTO(teamId=1, teamName=teamA, memberId=2, userName=user2)
 ```
 
+## Summary
+JPA 사양은 `fetch join` 절의 관련 엔티티에 대한 조건 추가를 허용하지 않지만, JPA 의 구현체인 `Hibernate` 의 경우는 사용할 수 있도록 구현되어 있다. 따라서 이러한 쿼리를 작성할 때에는 반환된 엔티티의 캐시 및 복제 문제를 고려해야 한다.  
+
+## 참고
+- https://www.inflearn.com/questions/15876
+- https://blog.termian.dev/posts/jpql-join-fetch-with-condition/
+- https://stir.tistory.com/288
+
